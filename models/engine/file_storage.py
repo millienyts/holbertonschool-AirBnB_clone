@@ -12,7 +12,6 @@ class FileStorage:
         "User": User,
         # Add other classes to this dictionary as you create them
     }
-
     def all(self):
         """Returns the dictionary __objects."""
         return self.__objects
@@ -35,8 +34,8 @@ class FileStorage:
                 obj_dict = json.load(f)
             for obj_id, obj_data in obj_dict.items():
                 cls_name = obj_data['__class__']
-                if cls_name in self.class_dict:
-                    cls = self.class_dict[cls_name]
+                cls = globals()[cls_name] if cls_name in globals() else None
+                if cls:
                     self.__objects[obj_id] = cls(**obj_data)
         except FileNotFoundError:
             pass
