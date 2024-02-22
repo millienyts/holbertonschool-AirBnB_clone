@@ -24,16 +24,29 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel or User"""
-        if not arg:
-            print("** class name missing **")
-            return
+    args = arg.split()
+    if len(args) == 0:
+        print("** class name missing **")
+        return
+    if args[0] not in self.class_dict:
+        print("** class doesn't exist **")
+        return
+    instance = self.class_dict[args[0]]()
+    for attr in args[1:]:
+        key, value = attr.split("=")
+        setattr(instance, key, self.cast_attr(value))
+    instance.save()
+    print(instance.id)
+
+def cast_attr(self, value):
+    """Attempts to cast `value` to an int, float, or leave as string."""
+    try:
+        return int(value)
+    except ValueError:
         try:
-            new_instance = self.class_dict[arg]()
-            new_instance.save()
-            print(new_instance.id)
-        except KeyError:
-            print("** class doesn't exist **")
+            return float(value)
+        except ValueError:
+            return value.strip('"').replace('_', ' ')
 
     def do_show(self, arg):
         """Shows an instance based on class name and id"""
