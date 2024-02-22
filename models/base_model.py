@@ -6,12 +6,14 @@ import models  # Ensure this import is at the top to avoid circular imports
 class BaseModel:
     """Defines all common attributes/methods for other classes."""
     
-        def __init__(self, *args, **kwargs):
-            """Initialization of the base model."""
-             if kwargs:
-                for key, value in kwargs.items():
-                    if key == "created_at" or key == "updated_at":
-                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+    def __init__(self, *args, **kwargs):
+        """Initialization of the base model."""
+        if kwargs:
+            for key, value in kwargs.items():
+                if key in ["created_at", "updated_at"]:
+                    # Correct datetime conversion for deserialization
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if key != "__class__":
                     setattr(self, key, value)
             self.id = kwargs.get("id", str(uuid4()))
             self.created_at = kwargs.get("created_at", datetime.now())
