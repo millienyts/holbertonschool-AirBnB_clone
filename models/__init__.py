@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 import unittest
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
+
+storage = FileStorage()
+storage.reload()
 
 class TestBaseModel(unittest.TestCase):
     """Unit tests for the BaseModel class"""

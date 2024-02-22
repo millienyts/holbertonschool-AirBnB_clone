@@ -3,34 +3,34 @@ import json
 from models.base_model import BaseModel
 
 class FileStorage:
-    """Handles long-term storage of all class instances."""
+    """Serializes instances to a JSON file and deserializes JSON file to instances"""
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
-        """Returns the dictionary `__objects`."""
-        return self.__objects
+        """Returns the dictionary __objects"""
+        return FileStorage.__objects
 
     def new(self, obj):
-        """Adds new object to the storage dictionary."""
+        """Sets in __objects the obj with key <obj class name>.id"""
         if obj:
             key = f"{obj.__class__.__name__}.{obj.id}"
-            self.__objects[key] = obj
+            FileStorage.__objects[key] = obj
 
     def save(self):
-        """Serializes `__objects` to the JSON file."""
-        obj_dict = {obj_id: obj.to_dict() for obj_id, obj in self.__objects.items()}
-        with open(self.__file_path, 'w') as f:
+        """Serializes __objects to the JSON file (path: __file_path)"""
+        obj_dict = {obj: self.__objects[obj].to_dict() for obj in self.__objects.keys()}
+        with open(FileStorage.__file_path, 'w') as f:
             json.dump(obj_dict, f)
 
     def reload(self):
-        """Deserializes the JSON file to `__objects`."""
+        """Deserializes the JSON file to __objects"""
         try:
-            with open(self.__file_path, 'r') as f:
-                obj_dict = json.load(f)
-            for obj_id, obj_data in obj_dict.items():
-                class_name = obj_data['__class__']
-                del obj_data['__class__']
-                self.__objects[obj_id] = eval(f"{class_name}(**obj_data)")
+            with open(FileStorage.__file_path, 'r') as f:
+                objs = json.load(f)
+                for obj in objs.values():
+                    cls_name = obj["__class__"]
+                    del obj["__class__"]
+                    self.__objects[cls_name + '.' + obj['id']] = eval(cls_name)(**obj)
         except FileNotFoundError:
             pass
