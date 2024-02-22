@@ -84,20 +84,46 @@ class HBNBCommand(cmd.Cmd):
             return
         obj_list = [str(obj) for key, obj in storage.all().items() if not args or key.startswith(args[0])]
         print(obj_list)
-def do_update(self, arg):
-    args = arg.split()
-    if len(args) < 4:
-        print("** class name missing **" if len(args) == 0 else
-              "** instance id missing **" if len(args) == 1 else
-              "** attribute name missing **" if len(args) == 2 else
-              "** value missing **")
-        return
-    key = f"{args[0]}.{args[1]}"
-    if key in storage.all():
-        setattr(storage.all()[key], args[2], args[3].strip('"'))
-        storage.all()[key].save()
-    else:
-        print("** no instance found **")
 
+    def do_update(self, arg):
+    args = arg.split()
+    if len(args) < 1:
+        print("** class name missing **")
+        return
+    if args[0] not in self.class_dict:
+        print("** class doesn't exist **")
+        return
+    if len(args) < 2:
+        print("** instance id missing **")
+        return
+    if len(args) < 3:
+        print("** attribute name missing **")
+        return
+    if len(args) < 4:
+        print("** value missing **")
+        return
+
+    obj_dict = storage.all()
+    obj_key = f"{args[0]}.{args[1]}"
+
+    if obj_key not in obj_dict:
+        print("** no instance found **")
+        return
+
+    obj = obj_dict[obj_key]
+    # Prevent updating id, created_at, and updated_at
+    if args[2] not in ['id', 'created_at', 'updated_at']:
+        attr_value = args[3].strip("\"'")
+        # Cast attribute value to int or float if applicable
+        try:
+            attr_value = int(attr_value)
+        except ValueError:
+            try:
+                attr_value = float(attr_value)
+            except ValueError:
+                pass
+        setattr(obj, args[2], attr_value)
+        obj.save()
+        
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
