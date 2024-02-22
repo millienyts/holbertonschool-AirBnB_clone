@@ -1,35 +1,39 @@
 #!/usr/bin/python3
 from uuid import uuid4
 from datetime import datetime
-import models
+import models  # Ensure this import is at the top to avoid circular imports
 
 class BaseModel:
-    """Defines all common attributes/methods for other classes"""
+    """Defines all common attributes/methods for other classes."""
     
     def __init__(self, *args, **kwargs):
-        """Initialization of the base model"""
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
+        """Initialization of the base model."""
         if kwargs:
             for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
+                    # Correct datetime conversion for deserialization
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                setattr(self, key, value)
+                if key != "__class__":
+                    setattr(self, key, value)
+            self.id = kwargs.get("id", str(uuid4()))
+            self.created_at = kwargs.get("created_at", datetime.now())
+            self.updated_at = kwargs.get("updated_at", datetime.now())
         else:
-            models.storage.new(self)
+            self.id = str(uuid4())
+            self.created_at = self.updated_at = datetime.now()
+            models.storage.new(self)  # Link the instance with FileStorage upon creation
 
     def __str__(self):
-        """String representation of the BaseModel class"""
+        """String representation of the BaseModel class."""
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
-        """Updates the public instance attribute updated_at with the current datetime"""
+        """Updates the public instance attribute `updated_at` with the current datetime."""
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """Returns a dictionary containing all keys/values of __dict__ of the instance"""
+        """Returns a dictionary containing all keys/values of __dict__ of the instance."""
         model_dict = self.__dict__.copy()
         model_dict["__class__"] = self.__class__.__name__
         model_dict["created_at"] = model_dict["created_at"].isoformat()
