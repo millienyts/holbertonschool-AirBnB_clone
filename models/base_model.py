@@ -37,7 +37,7 @@ class BaseModel:
         self.updated_at = datetime.now()
         storage.save()
 
-    def to_dict(self)
+    def to_dict(self):
         """
         Returns a dictionary containing all keys/values of the instance's __dict__.
         Includes the class name under a key '__class__'.
