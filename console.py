@@ -66,7 +66,7 @@ def cast_attr(self, value):
         else:
             print("** class doesn't exist **")
 
-      def do_destroy(self, arg):
+    def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         args = arg.split()
         if len(args) == 0:
@@ -84,7 +84,6 @@ def cast_attr(self, value):
             storage.save()
         else:
             print("** no instance found **")
-
 
     def do_all(self, arg):
         """Prints all string representation of all instances based or not on the class name"""
