@@ -42,5 +42,45 @@ class TestFileStorage(unittest.TestCase):
         if os.path.exists(self.storage._FileStorage__file_path):
             os.remove(self.storage._FileStorage__file_path)
 
+    def test_all_method(self):
+        """Test the all method returns all objects."""
+        self.assertEqual(len(self.storage.all()), 0)
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.assertEqual(len(self.storage.all()), 1)
+
+    def test_new_method(self):
+        """Test the new method adds objects correctly."""
+        obj = BaseModel()
+        self.storage.new(obj)
+        key = f"BaseModel.{obj.id}"
+        self.assertIn(key, self.storage.all())
+
+    def test_objects_type(self):
+        """Test that __objects is a dictionary."""
+        self.assertTrue(isinstance(self.storage.all(), dict))
+
+    def test_save_creates_file(self):
+        """Test that save method creates a file."""
+        obj = BaseModel()
+        self.storage.new(obj)
+        self.storage.save()
+        self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
+
+    def test_reload_method(self):
+        """Test reloading objects from a file."""
+        obj = BaseModel()
+        obj.name = "Holberton"
+        self.storage.new(obj)
+        self.storage.save()
+
+        new_storage = FileStorage()
+        new_storage.reload()
+        objects = new_storage.all()
+        key = f"BaseModel.{obj.id}"
+        self.assertIn(key, objects)
+        reloaded_obj = objects[key]
+        self.assertEqual(reloaded_obj.name, obj.name)
+
 if __name__ == "__main__":
     unittest.main()
