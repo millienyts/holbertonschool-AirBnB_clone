@@ -24,29 +24,28 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-    args = arg.split()
-    if len(args) == 0:
-        print("** class name missing **")
-        return
-    if args[0] not in self.class_dict:
-        print("** class doesn't exist **")
-        return
-    instance = self.class_dict[args[0]]()
-    for attr in args[1:]:
-        key, value = attr.split("=")
-        setattr(instance, key, self.cast_attr(value))
-    instance.save()
-    print(instance.id)
+        args = arg.split()
+        if len(args) == 0:
+            print("** class name missing **")
+            return
+        if args[0] not in self.class_dict:
+            print("** class doesn't exist **")
+            return
+        
+        new_instance = self.class_dict[args[0]]()
+        new_instance.save()
+        print(new_instance.id)
 
-def cast_attr(self, value):
-    """Attempts to cast `value` to an int, float, or leave as string."""
-    try:
-        return int(value)
-    except ValueError:
+
+    def cast_attr(self, value):
+        """Attempts to cast `value` to an int, float, or leave as string."""
         try:
-            return float(value)
+            return int(value)
         except ValueError:
-            return value.strip('"').replace('_', ' ')
+            try:
+                return float(value)
+            except ValueError:
+                return value.strip('"').replace('_', ' ')
 
     def do_show(self, arg):
         """Shows an instance based on class name and id"""
@@ -67,16 +66,9 @@ def cast_attr(self, value):
             print("** class doesn't exist **")
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id"""
         args = arg.split()
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        if args[0] not in self.class_dict:
-            print("** class doesn't exist **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
+        if len(args) < 2:
+            print("** class name missing **" if len(args) == 0 else "** instance id missing **")
             return
         key = f"{args[0]}.{args[1]}"
         if key in storage.all():
@@ -84,42 +76,28 @@ def cast_attr(self, value):
             storage.save()
         else:
             print("** no instance found **")
-
+                
     def do_all(self, arg):
-        """Prints all string representation of all instances based or not on the class name"""
-        if arg and arg not in self.class_names:
-            print("** class doesn't exist **")
-            return
-        obj_list = []
-        for obj_id in storage.all():
-            if not arg or arg == obj_id.split('.')[0]:
-                obj_list.append(str(storage.all()[obj_id]))
-        print(obj_list)
-
-    def do_update(self, arg):
-        """Updates an instance based on the class name and id by adding or updating attribute"""
         args = arg.split()
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        if args[0] not in self.class_names:
+        if len(args) > 0 and args[0] not in self.class_dict:
             print("** class doesn't exist **")
             return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
-        if len(args) == 2:
-            print("** attribute name missing **")
-            return
-        if len(args) == 3:
-            print("** value missing **")
-            return
-        key = f"{args[0]}.{args[1]}"
-        if key not in storage.all():
-            print("** no instance found **")
-            return
+        obj_list = [str(obj) for key, obj in storage.all().items() if not args or key.startswith(args[0])]
+        print(obj_list)
+def do_update(self, arg):
+    args = arg.split()
+    if len(args) < 4:
+        print("** class name missing **" if len(args) == 0 else
+              "** instance id missing **" if len(args) == 1 else
+              "** attribute name missing **" if len(args) == 2 else
+              "** value missing **")
+        return
+    key = f"{args[0]}.{args[1]}"
+    if key in storage.all():
         setattr(storage.all()[key], args[2], args[3].strip('"'))
         storage.all()[key].save()
+    else:
+        print("** no instance found **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
