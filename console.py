@@ -3,12 +3,14 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+# Import additional classes here as needed
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     class_dict = {
         'BaseModel': BaseModel,
-        'User': User
+        'User': User,
+        # Extend this dictionary with new classes as you create them
     }
 
     def do_quit(self, arg):
@@ -17,13 +19,19 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """EOF command to exit the program"""
+        print()  # Ensure a newline for clean exit
         return True
 
     def emptyline(self):
-        """An empty line + ENTER shouldn’t execute anything"""
+        """An empty line + ENTER shouldn’t execute anything.
+        Overriding this method prevents running the last command for an empty line."""
         pass
 
+    # Your implementation for create, show, destroy, all, and update commands
+
     def do_create(self, arg):
+        """Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id"""
+        # Your existing implementation is correct, no changes needed here
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
