@@ -53,7 +53,7 @@ if __name__ == "__main__":
             self.assertEqual(FileStorage._FileStorage__file_path, "file.json")
 
         def test_objects(self):
-            self.assertIsInstance(FileStorage._FileStorage__objects, dict)
+    self.assertIsInstance(self.storage._FileStorage__objects, dict)
 
         def test_all(self):
             all_objects = self.storage.all()
