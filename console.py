@@ -31,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """An empty line + ENTER shouldn’t execute anything"""
+        """An empty line + ENTER or spaces + ENTER shouldn’t execute anything"""
         pass
 
     def do_create(self, arg):
@@ -118,9 +118,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 4:
             print("** value missing **")
             return
-        setattr(storage.all()[key], args[2], 
-        args[3].strip('"'))
+        setattr(storage.all()[key], args[2], args[3].strip('"'))
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
