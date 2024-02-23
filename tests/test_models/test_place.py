@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 import unittest
 from models.place import Place
+from datetime import datetime
 
 class TestPlace(unittest.TestCase):
     """Tests for the Place class."""
     def setUp(self):
         """Set up test methods."""
         self.place_instance = Place()
-        # Set attributes for the Place instance
         self.place_instance.name = "My lovely house"
         self.place_instance.city_id = "0001"
         self.place_instance.user_id = "0001"
@@ -31,9 +31,9 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.place_instance.latitude, 120.0)
         self.assertEqual(self.place_instance.longitude, 90.0)
         self.assertEqual(self.place_instance.amenity_ids, [])
-        self.assertTrue(hasattr(self.place_instance, "id"))
-        self.assertTrue(hasattr(self.place_instance, "created_at"))
-        self.assertTrue(hasattr(self.place_instance, "updated_at"))
+        self.assertIsInstance(self.place_instance.id, str)
+        self.assertIsInstance(self.place_instance.created_at, datetime)
+        self.assertIsInstance(self.place_instance.updated_at, datetime)
 
 if __name__ == "__main__":
     unittest.main()

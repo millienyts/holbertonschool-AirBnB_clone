@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import unittest
 from models.amenity import Amenity
+from datetime import datetime
 
 class TestAmenity(unittest.TestCase):
     """Tests for the Amenity class."""
@@ -12,9 +13,9 @@ class TestAmenity(unittest.TestCase):
     def test_attributes(self):
         """Test the attributes of Amenity instances."""
         self.assertEqual(self.amenity_instance.name, "Wi-Fi")
-        self.assertTrue(hasattr(self.amenity_instance, "id"))
-        self.assertTrue(hasattr(self.amenity_instance, "created_at"))
-        self.assertTrue(hasattr(self.amenity_instance, "updated_at"))
+        self.assertIsInstance(self.amenity_instance.id, str)
+        self.assertIsInstance(self.amenity_instance.created_at, datetime)
+        self.assertIsInstance(self.amenity_instance.updated_at, datetime)
 
 if __name__ == "__main__":
     unittest.main()
