@@ -54,5 +54,6 @@ class HBNBCommand(cmd.Cmd):
             return
         print("** Update", arg)
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
