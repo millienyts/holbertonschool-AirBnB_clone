@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import unittest
+from unittest.mock import patch
 from models.base_model import BaseModel
+from models import storage
 
 class TestBaseModel(unittest.TestCase):
     """Unit tests for the BaseModel class"""
@@ -19,11 +21,13 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(expected, str(model))
 
     def test_save(self):
-        """Test the save method updates `updated_at`"""
+        """Test the save method updates `updated_at` and calls storage.save"""
         model = BaseModel()
         original_updated_at = model.updated_at
-        model.save()
-        self.assertNotEqual(original_updated_at, model.updated_at)
+        with patch.object(storage, 'save') as mock_save:
+            model.save()
+            self.assertNotEqual(original_updated_at, model.updated_at)
+            mock_save.assert_called_once()
 
     def test_to_dict(self):
         """Test the to_dict method returns a dictionary with correct keys and formats"""
@@ -35,3 +39,4 @@ class TestBaseModel(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
