@@ -15,7 +15,6 @@ from models.amenity import Amenity
 from models.review import Review
 import unittest
 import os
-from models.engine.file_storage import FileStorage
 
 
 class TestFileStorage(unittest.TestCase):
