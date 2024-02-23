@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import unittest
 from models.city import City
+from datetime import datetime
 
 class TestCity(unittest.TestCase):
     """Tests for the City class."""
@@ -14,9 +15,9 @@ class TestCity(unittest.TestCase):
         """Test the attributes of City instances."""
         self.assertEqual(self.city_instance.name, "San Francisco")
         self.assertEqual(self.city_instance.state_id, "CA")
-        self.assertTrue(hasattr(self.city_instance, "id"))
-        self.assertTrue(hasattr(self.city_instance, "created_at"))
-        self.assertTrue(hasattr(self.city_instance, "updated_at"))
+        self.assertIsInstance(self.city_instance.id, str)
+        self.assertIsInstance(self.city_instance.created_at, datetime)
+        self.assertIsInstance(self.city_instance.updated_at, datetime)
 
 if __name__ == "__main__":
     unittest.main()
