@@ -33,11 +33,11 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path, 'r') as f:
                 objects = json.load(f)
-            for obj_id, obj_data in objects.items():
-                cls_name = obj_data['__class__']
-                cls = globals().get(cls_name)
-                if cls:
-                    FileStorage.__objects[obj_id] = cls(**obj_data)
+                for obj_id, obj_data in objects.items():
+                    cls_name = obj_data['__class__']
+                    cls = globals().get(cls_name)
+                    if cls:
+                        FileStorage.__objects[obj_id] = cls(**obj_data)
         except FileNotFoundError:
             pass
 
