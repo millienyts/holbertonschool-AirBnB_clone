@@ -33,11 +33,11 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path, 'r') as f:
                 objects = json.load(f)
-                for obj_id, obj_data in objects.items():
-                    cls_name = obj_data['__class__']
-                    cls = globals().get(cls_name)
-                    if cls:
-                        FileStorage.__objects[obj_id] = cls(**obj_data)
+            for obj_id, obj_data in objects.items():
+                cls_name = obj_data['__class__']
+                cls = globals().get(cls_name)
+                if cls:
+                    FileStorage.__objects[obj_id] = cls(**obj_data)
         except FileNotFoundError:
             pass
 
@@ -53,7 +53,7 @@ if __name__ == "__main__":
             self.assertEqual(FileStorage._FileStorage__file_path, "file.json")
 
         def test_objects(self):
-    self.assertIsInstance(self.storage._FileStorage__objects, dict)
+            self.assertIsInstance(FileStorage._FileStorage__objects, dict)
 
         def test_all(self):
             all_objects = self.storage.all()
