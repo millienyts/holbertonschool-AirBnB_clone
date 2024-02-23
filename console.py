@@ -3,16 +3,24 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
-# Import other models here as they are created
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     class_dict = {
         'BaseModel': BaseModel,
         'User': User,
-        # Include other classes here
+        'Place': Place,
+        'State': State,
+        'City': City,
+        'Amenity': Amenity,
+        'Review': Review,
     }
-
+    
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
