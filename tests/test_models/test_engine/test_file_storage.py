@@ -14,6 +14,10 @@ class TestFileStorage(unittest.TestCase):
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
 
+    def test_file_path(self):
+        """Test to verify file path for storage."""
+        self.assertEqual(self.file_path, "file.json")
+
     def test_save_and_reload(self):
         """Tests saving objects to file and reloading them."""
         obj = BaseModel()
@@ -70,7 +74,7 @@ class TestFileStorage(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.storage.save("unnecessary argument")  # save should not accept arguments
 
-        # Additional no argument tests for methods like `new()` or `all()` can be added based on second code insights
+        # Additional no argument tests for methods like `new()` or `all()` can be added based on code insights
 
     def tearDown(self):
         """Cleans up after each test."""
