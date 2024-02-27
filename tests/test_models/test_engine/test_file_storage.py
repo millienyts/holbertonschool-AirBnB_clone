@@ -17,7 +17,17 @@ class TestFileStorage(unittest.TestCase):
     def test_file_path(self):
         """Test to verify file path for storage."""
         self.assertEqual(self.file_path, "file.json")
-
+     def test_objects_private_attribute(self):
+        """Test to verify that the __objects private attribute is correctly managed."""
+        initial_count = len(self.storage.all())
+        new_model = BaseModel()
+        self.storage.new(new_model)
+        # Ensure that adding an object increases the count of stored objects
+        self.assertEqual(len(self.storage.all()), initial_count + 1)
+        # Verify indirectly that the object is stored in __objects through public interface
+        object_key = f"BaseModel.{new_model.id}"
+        self.assertIn(object_key, self.storage.all())
+        
     def test_save_and_reload(self):
         """Tests saving objects to file and reloading them."""
         obj = BaseModel()
