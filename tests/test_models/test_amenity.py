@@ -17,5 +17,13 @@ class TestAmenity(unittest.TestCase):
         self.assertIsInstance(self.amenity_instance.created_at, datetime)
         self.assertIsInstance(self.amenity_instance.updated_at, datetime)
 
+    def test_amenity_attributes(self):
+        '''
+            Class Amenity test cases
+        '''
+        amenity = Amenity()
+        self.assertEqual(amenity.name, "")
+
+
 if __name__ == "__main__":
     unittest.main()
