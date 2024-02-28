@@ -4,14 +4,27 @@
 This project is a part of the AirBnB clone project, focusing on building a command-line interface (CLI) to manage AirBnB objects. The CLI allows users to interact with the application by creating, retrieving, updating, and deleting objects like User, State, City, Place, etc. 
 
 ## Command Interpreter
-The command interpreter provides a shell-like interface where users can input commands to perform various operations on AirBnB objects. It supports both interactive and non-interactive modes.
+The command interpreter provides the following functionalities:
+
+- Creating a new object
+- Retrieving an object from a file or database
+- Performing operations on objects (e.g., counting, computing stats)
+- Updating attributes of an object
+- Destroying an object
+
 
 ### How to Start
 To start the command interpreter, execute the `console.py` script in the terminal.
 
 
 ### How to Use
-Once the command interpreter is running, you can input commands to manage AirBnB objects. Use the `help` command to get a list of available commands and their usage.
+Once the command interpreter is running, you can use the following commands:
+
+- `create`: Creates a new instance of a specified class.
+- `show`: Displays the details of a specific instance based on class name and ID.
+- `destroy`: Deletes a specific instance based on class name and ID.
+- `all`: Displays details of all instances or instances of a specific class.
+- `update`: Updates attributes of a specific instance.
 
 ## Authors
 - Norman Colón Cruz
