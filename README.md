@@ -25,10 +25,6 @@ Once the command interpreter is running, you can use the following commands:
 - `destroy`: Deletes a specific instance based on class name and ID.
 - `all`: Displays details of all instances or instances of a specific class.
 - `update`: Updates attributes of a specific instance.
-
-## Authors
-- Norman Colón Cruz
-- Millieny Torres Santa
  
 ## Requirements
 ### Python Scripts
@@ -66,3 +62,6 @@ Your shell should work like this in interactive mode:
 
 $ ./console.py
 
+## Authors
+- Norman Colón Cruz
+- Millieny Torres Santa
