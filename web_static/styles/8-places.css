@@ -1,0 +1,64 @@
+/* Styling for the h1 tag within the .places container */
+.places h1 {
+    font-size: 30px; /* Sets the font size to 30 pixels */
+    margin: 20px 0; /* Sets the top and bottom margin to 20 pixels and the left and right margin to 0 */
+    padding-left: 20px; /* Sets the left padding to 20 pixels */
+}
+
+/* Styling for the article tag within the .places container */
+.places article {
+    width: 390px; /* Sets the width of the article to 390 pixels */
+    padding: 20px; /* Sets the padding inside the article to 20 pixels */
+    margin: 20px; /* Sets the margin around the article to 20 pixels */
+    border: 1px solid #FF5A5F; /* Sets a border around the article with a color of #FF5A5F */
+    border-radius: 4px; /* Sets the border radius to 4 pixels, giving it slightly rounded corners */
+    text-align: center; /* Centers the content inside the article */
+}
+
+/* Styling for the h2 tag within the .places container */
+.places h2 {
+    font-size: 30px; /* Sets the font size to 30 pixels */
+}
+
+/* Styling for elements with the class .price_by_night */
+.price_by_night {
+    color: #FF5A5F; /* Sets the text color to #FF5A5F */
+    border: 4px solid #FF5A5F; /* Sets a solid border with a color of #FF5A5F */
+    border-radius: 50%; /* Sets the border radius to 50%, making it a circle */
+    width: 60px; /* Sets the width to 60 pixels */
+    height: 60px; /* Sets the height to 60 pixels */
+    font-size: 30px; /* Sets the font size to 30 pixels */
+    position: absolute; /* Positions the element absolutely within its containing element */
+    top: 20px; /* Positions the element 20 pixels from the top of its containing element */
+    right: 20px; /* Positions the element 20 pixels from the right of its containing element */
+    display: flex; /* Uses flexbox for layout */
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+}
+
+/* Styling for elements with the class .information */
+.information {
+    border-top: 1px solid #DDDDDD; /* Sets a solid border on the top with a color of #DDDDDD */
+    border-bottom: 1px solid #DDDDDD; /* Sets a solid border on the bottom with a color of #DDDDDD */
+    height: 80px; /* Sets the height to 80 pixels */
+    display: flex; /* Uses flexbox for layout */
+    justify-content: space-around; /* Spaces the elements evenly along the main axis */
+    align-items: center; /* Centers the elements vertically */
+}
+
+/* Styling for elements with the classes .max_guest, .number_rooms, and .number_bathrooms */
+.max_guest, .number_rooms, .number_bathrooms {
+    width: 100px; /* Sets the width to 100 pixels */
+    text-align: center; /* Centers the text horizontally */
+}
+
+/* Styling for elements with the class .user */
+.user {
+    font-weight: bold; /* Sets the font weight to bold */
+}
+
+/* Styling for elements with the class .description */
+.description {
+    /* If you want to add specific styles to the description */
+}
+
